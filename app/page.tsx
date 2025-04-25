@@ -27,28 +27,52 @@ export default function Home() {
             my tech journey and embrace the joy of learning together. Let's keep
             it simple, casual, and enjoy the coding ride!
           </div>
-          <div className="flex mt-2">
-            <div className="text-sm mr-4"> Find me on </div>
-            <img
-              className="max-w-[22px] mr-4"
-              src="/linkedinIcon.png"
-              alt="linkedinIcon"
-            />
-            <img
-              className="max-w-[22px] mr-4"
-              src="/githubIcon.png"
-              alt="githubIcon"
-            />
-            <img
-              className="max-w-[22px] mr-4"
-              src="/mailIcon.png"
-              alt="mailIcon"
-            />
-            <img
-              className="max-w-[22px] mr-4"
-              src="/instagramIcon.png"
-              alt="instagramIcon"
-            />
+          <div className="flex items-center text-sm mt-2">
+            <div className="mr-4">Find me on</div>
+
+            <a
+              href="https://www.linkedin.com/in/tiohardadi/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                className="max-w-[22px] mr-4"
+                src="/linkedinIcon.png"
+                alt="LinkedIn Icon"
+              />
+            </a>
+
+            <a
+              href="https://github.com/Tiohardadi"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                className="max-w-[22px] mr-4"
+                src="/githubIcon.png"
+                alt="GitHub Icon"
+              />
+            </a>
+
+            <a href="mailto:tio@example.com">
+              <img
+                className="max-w-[22px] mr-4"
+                src="/mailIcon.png"
+                alt="Email Icon"
+              />
+            </a>
+
+            <a
+              href="https://www.instagram.com/tiohardadis"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                className="max-w-[22px] mr-4"
+                src="/instagramIcon.png"
+                alt="Instagram Icon"
+              />
+            </a>
           </div>
         </div>
       </div>
@@ -76,7 +100,7 @@ export default function Home() {
               </Link>
 
               {post.description && (
-                <p className="text-sm text-gray-300 mb-3">{post.description}</p>
+                <p className="text-sm mb-3">{post.description}</p>
               )}
             </div>
           ))}
@@ -104,8 +128,6 @@ export default function Home() {
           </article>
         ))}
       </div>
-
-      <div className="text-center">Copyright 2024 Tio Hardadi Somantri</div>
     </>
   );
 }

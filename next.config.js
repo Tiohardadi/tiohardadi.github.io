@@ -3,7 +3,8 @@ const { withContentlayer } = require("next-contentlayer");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  assetPrefix: '/',
+  assetPrefix: './',
+  basePath:'tiohardadi.github.io',
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   images: {
     unoptimized: true,

@@ -20,7 +20,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <div className="max-w-3xl mx-auto py-10 px-4">
-            <main>{children}</main>
+            <main>
+              {children}
+              <div className="text-center">Copyright 2025 Tio Hardadi Somantri</div>
+            </main>
           </div>
           <Analytics />
         </ThemeProvider>

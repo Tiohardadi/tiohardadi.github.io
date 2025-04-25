@@ -3,8 +3,8 @@ const { withContentlayer } = require("next-contentlayer");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/tiohardadis',
-  assetPrefix: '/tiohardadis/',
+  // basePath: '/tiohardadis',
+  // assetPrefix: '/tiohardadis/',
   images: {
     unoptimized: true,
   },

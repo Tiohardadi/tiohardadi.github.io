@@ -7,31 +7,30 @@ export default function Home() {
     <>
       <header>
         <div className="flex justify-end">
-          <></>
           <ModeToggle />
         </div>
       </header>
-      <div className="flex mb-[60px]">
-        <div>
+      <div className="flex flex-col sm:flex-row mb-[60px]">
+        <div className="flex justify-center sm:justify-start mb-4 sm:mb-0">
           <img
-            className="object-fill max-w-[175px]"
+            className="object-fill max-w-[130px] sm:max-w-[175px]"
             src="/avatar.png"
             alt="avatar"
           />
         </div>
-        <div>
-          <div className="text-2xl font-bold">Hi, I’m Tio!</div>
+        <div className="sm:ml-4">
+          <div className="text-2xl font-bold text-center sm:text-left">Hi, I'm Tio!</div>
           <div className="text-sm mt-2 text-justify">
             Hello from my little corner of the web! I'm Tio, a programmer in
             Indonesia who's always learning. Join me in this space where I share
             my tech journey and embrace the joy of learning together. Let's keep
             it simple, casual, and enjoy the coding ride!
           </div>
-          <div className="flex items-center text-sm mt-2">
+          <div className="flex items-center justify-center sm:justify-start text-sm mt-2">
             <div className="mr-4">Find me on</div>
 
-            <a
-              href="https://www.linkedin.com/in/tiohardadi/"
+            
+            <a href="https://www.linkedin.com/in/tiohardadi/"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -42,8 +41,8 @@ export default function Home() {
               />
             </a>
 
-            <a
-              href="https://github.com/Tiohardadi"
+            
+            <a href="https://github.com/Tiohardadi"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -62,8 +61,8 @@ export default function Home() {
               />
             </a>
 
-            <a
-              href="https://www.instagram.com/tiohardadis"
+            
+            <a href="https://www.instagram.com/tiohardadis"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -112,8 +111,8 @@ export default function Home() {
         {allProjects.map((project) => (
           <article key={project._id}>
             {project.sourceCodeUrl ? (
-              <a
-                href={project.sourceCodeUrl}
+              
+              <a href={project.sourceCodeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:underline"

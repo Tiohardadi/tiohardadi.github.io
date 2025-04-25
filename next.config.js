@@ -8,6 +8,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  transpilePackages: ['contentlayer', 'next-contentlayer'],
   reactStrictMode: true,
   swcMinify: true,
   exportTrailingSlash: true,

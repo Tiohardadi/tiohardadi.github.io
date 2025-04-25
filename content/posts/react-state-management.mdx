@@ -1,0 +1,165 @@
+---
+title: "State Management di React: Dari useState ke Context, Redux, dan Teman-Temannya"
+description: Pelajari bagaimana cara mengelola data di React—mulai dari useState, Context API, hingga solusi manajemen state global seperti Redux dan Zustand.
+date: 2024-06-29
+---
+
+Ketika kamu bikin aplikasi React, kamu pasti akan cepat sadar satu hal:  
+> “Data ini harus disimpan… tapi **di mana** dan **siapa yang bertanggung jawab?**”
+
+Selamat datang di dunia **state management**—tempat di mana kita belajar menyimpan, mengubah, dan menyebarkan data antar komponen React tanpa jadi orang tua tunggal untuk semua `props`.
+
+---
+
+## 🧠 Apa Itu *State Management*?
+
+Sederhananya, *state management* adalah **cara menyimpan dan mengatur data** yang dibutuhkan untuk aplikasi kita berjalan. Data ini bisa sekecil input teks, atau sebesar daftar produk dari server.
+
+Contoh masalah kecil:
+- Input nama user di satu halaman
+
+Contoh masalah besar:
+- Status login user, keranjang belanja, dark mode, data user yang dipakai di 10 komponen berbeda
+
+Semakin kompleks aplikasinya, semakin perlu cara yang rapi untuk ngatur state.
+
+---
+
+## 🧷 Level 1: `useState` – Simpel, Lokal, dan Langsung
+
+Kalau data cuma dipakai di satu komponen, `useState` adalah pilihan paling cepat dan mudah.
+
+```jsx
+const [nama, setNama] = useState('');
+```
+
+Tapi kalau kamu mulai "lempar-lempar props" ke cucu komponen? Hmm. Saatnya naik level.
+
+---
+
+## 🔁 Level 2: `useReducer` – State Lebih Terstruktur
+
+Kalau satu komponen punya banyak bagian state, atau logikanya ribet, pakai `useReducer`.
+
+```jsx
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'ubah_nama': return { ...state, nama: action.payload };
+    case 'reset': return { nama: '', umur: 0 };
+    default: return state;
+  }
+};
+
+const [state, dispatch] = useReducer(reducer, { nama: '', umur: 0 });
+```
+
+Pakai ini saat kamu ingin struktur yang lebih rapi tanpa harus pakai library tambahan.
+
+---
+
+## 📡 Level 3: Context API – Global, Tapi Tetap Sederhana
+
+Kalau kamu perlu **berbagi data antar banyak komponen**, gunakan `React.createContext`.
+
+### Contoh:
+```jsx
+const TemaContext = createContext();
+
+function App() {
+  return (
+    <TemaContext.Provider value="gelap">
+      <KomponenAnak />
+    </TemaContext.Provider>
+  );
+}
+
+function KomponenAnak() {
+  const tema = useContext(TemaContext);
+  return <p>Tema sekarang: {tema}</p>;
+}
+```
+
+### Kapan Cocok?
+- State global seperti tema, bahasa, user login
+- Data yang jarang berubah
+
+### Kapan Tidak Cocok?
+- Kalau datanya sering berubah → karena setiap perubahan akan render ulang semua konsumen context.
+
+---
+
+## 🔥 Level 4: Redux – Sang Dewa State Management (dan Kadang Overkill)
+
+Redux terkenal karena:
+- Struktur jelas: `actions → reducer → state`
+- Cocok untuk skala besar
+- Banyak tooling & ekosistem
+
+Tapi juga:
+- Boilerplate-nya banyak
+- Terlalu ribet untuk proyek kecil
+
+```jsx
+// Contoh dispatch:
+dispatch({ type: 'tambah_item', payload: item });
+```
+
+### Gunakan Redux kalau:
+- Aplikasimu besar dan kompleks
+- Banyak tim terlibat
+- State harus bisa di-*debug*, di-*time travel*, dan di-*log*
+
+> Pro tip: Gunakan Redux Toolkit biar tidak sakit jiwa.
+
+---
+
+## 🌿 Level 5: Zustand – Redux Tapi Tanpa Drama
+
+Kalau kamu suka kesederhanaan, tapi butuh **global state** tanpa boilerplate dan tanpa `Provider` bertingkat-tingkat, coba Zustand.
+
+```jsx
+const useStore = create((set) => ({
+  count: 0,
+  tambah: () => set((state) => ({ count: state.count + 1 })),
+}));
+
+function Counter() {
+  const { count, tambah } = useStore();
+  return <button onClick={tambah}>Klik: {count}</button>;
+}
+```
+
+### Kelebihan:
+- Tidak perlu context
+- API simpel
+- Bisa persist data
+
+### Cocok untuk:
+- Aplikasi kecil hingga menengah
+- Developer yang udah *muak* dengan Redux
+
+---
+
+## 🗺️ Perbandingan Cepat
+
+| Level | Nama         | Kelebihan                  | Kekurangan                        |
+|-------|--------------|----------------------------|-----------------------------------|
+| 1     | `useState`   | Simpel, langsung            | Props drilling, nggak global      |
+| 2     | `useReducer` | Struktur jelas              | Masih lokal, tidak global         |
+| 3     | Context API  | Global, bawaan React        | Render ulang semua consumer       |
+| 4     | Redux        | Kuat, scalable, debugable   | Boilerplate, learning curve       |
+| 5     | Zustand      | Ringan, cepat, praktis      | Tidak seformal Redux (plus-minus) |
+
+---
+
+## 🔚 Kesimpulan: Kamu Butuh yang Mana?
+
+- **Aplikasi kecil?** `useState` udah cukup.
+- **Form panjang & ribet?** `useReducer`.
+- **Butuh data global?** Context API, atau kalau makin ribet → Zustand atau Redux.
+- **Aplikasi perusahaan, banyak tim, banyak fitur?** Redux + Redux Toolkit. Siap-siap pusing, tapi worth it kalau skala besar.
+
+Ingat, jangan over-engineer. Jangan pakai Redux buat simpan "popup sedang terbuka atau tidak".  
+Gunakan yang paling masuk akal untuk ukuran proyekmu.
+
+---

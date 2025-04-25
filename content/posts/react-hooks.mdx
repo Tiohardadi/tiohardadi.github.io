@@ -1,0 +1,260 @@
+---
+title: "Panduan Lengkap React Hooks: Dari useState Sampai useCallback, Dijelaskan dengan Bahasa Manusia"
+description: Pelajari semua React Hooks paling penting mulai dari useState, useEffect, useRef, hingga useContext, useReducer, useMemo, dan useCallback, dengan penjelasan detail, analogi sederhana, dan contoh nyata.
+date: 2024-06-22
+---
+
+Ketika kamu baru belajar React, kamu mungkin mulai dengan komponen berbasis fungsi yang simpel banget. Tapi lama-lama kamu sadar:
+
+> Lho, kok function component nggak bisa nyimpen data kayak `this.state`?
+
+Boom. Di situlah Hooks masuk.  
+Hooks adalah *superpower tersembunyi* dalam React yang bikin function component jadi **hidup**—bisa nyimpen data, merespon perubahan, akses langsung ke elemen, bahkan menangani state kompleks.
+
+Dalam panduan ini, kita akan bahas **semua React Hooks penting**, satu per satu, dengan **penjelasan yang masuk akal**, **contoh nyata**, dan sesekali **analogi aneh** biar kamu nggak bosen.
+
+---
+
+## 🧠 Apa Itu Hooks?
+
+Hooks adalah fungsi khusus yang diberikan oleh React supaya **function component** bisa:
+- Menyimpan data
+- Merespons perubahan
+- Berbagi data antar komponen
+- Menyimpan referensi
+- Mengatur logika kompleks
+- dan lain-lain
+
+Kita akan bahas:
+
+1. `useState`
+2. `useEffect`
+3. `useRef`
+4. `useContext`
+5. `useReducer`
+6. `useMemo`
+7. `useCallback`
+8. (bonus) `useLayoutEffect`, `useId`, dan lain-lain
+
+---
+
+## 1. 🔢 useState – Biar Komponen Bisa Mengingat Sesuatu
+
+### Fungsi utama:
+Menyimpan **data lokal** di dalam komponen. Biasanya dipakai untuk input, jumlah klik, status tombol, dll.
+
+```jsx
+import { useState } from 'react';
+
+function Counter() {
+  const [angka, setAngka] = useState(0);
+
+  return (
+    <div>
+      <p>Klik: {angka}</p>
+      <button onClick={() => setAngka(angka + 1)}>Tambah</button>
+    </div>
+  );
+}
+```
+
+### Analogi:
+Seperti kamu nulis catatan kecil buat diingat komponen. “Sekarang angkanya 5.” Dan setiap kali kamu ubah catatan itu, komponen langsung bilang: “Oke, saya tampilkan ulang semuanya, ya!”
+
+---
+
+## 2. 🌍 useEffect – Lakukan Sesuatu Setelah Render
+
+### Fungsi utama:
+Menjalankan **efek samping**, seperti ambil data dari API, manipulasi DOM, atau atur timer.
+
+```jsx
+import { useEffect } from 'react';
+
+useEffect(() => {
+  console.log("Component dimount!");
+  return () => {
+    console.log("Component di-unmount!");
+  };
+}, []);
+```
+
+### Tiga mode:
+- `[]`: Jalan **sekali**
+- `[nilai]`: Jalan setiap **nilai berubah**
+- (tanpa array): Jalan **setiap render**
+
+### Contoh real:
+```jsx
+useEffect(() => {
+  document.title = `Halo, ${nama}`;
+}, [nama]);
+```
+
+### Analogi:
+Seperti kamu bikin alarm:  
+“Kalau ada yang berubah, tolong lakukan ini.”  
+Dan kamu juga bisa pasang reminder: “Kalau ini diganti lagi, bersihin yang lama ya.”
+
+---
+
+## 3. 👁 useRef – Menyimpan Nilai Diam-Diam
+
+### Fungsi utama:
+Menyimpan nilai **tanpa menyebabkan re-render**, atau untuk akses langsung ke elemen DOM.
+
+```jsx
+const inputRef = useRef(null);
+
+return (
+  <>
+    <input ref={inputRef} />
+    <button onClick={() => inputRef.current.focus()}>
+      Fokus!
+    </button>
+  </>
+);
+```
+
+### Analogi:
+Seperti catatan post-it rahasia. Bisa kamu ubah kapan saja, tapi React nggak akan peduli isinya. Cocok buat data teknis, seperti ID timer atau elemen DOM.
+
+---
+
+## 4. 🌐 useContext – Berbagi Data Global Tanpa Props
+
+### Masalah:
+Kalau data harus dikirim dari komponen A → B → C → D, kamu harus oper-oper props terus. Ribet.
+
+### Solusi:
+Gunakan `useContext`.
+
+```jsx
+import { createContext, useContext } from 'react';
+
+const TemaContext = createContext('terang');
+
+function App() {
+  return (
+    <TemaContext.Provider value="gelap">
+      <Header />
+    </TemaContext.Provider>
+  );
+}
+
+function Header() {
+  const tema = useContext(TemaContext);
+  return <h1 style={{ color: tema === 'gelap' ? 'white' : 'black' }}>Selamat datang!</h1>;
+}
+```
+
+### Analogi:
+Bayangkan kamu nyalain radio (Provider), dan komponen lain cukup "tune in" ke frekuensinya dengan `useContext`.
+
+---
+
+## 5. ⛓️ useReducer – Manajemen State Lebih Terstruktur
+
+### Fungsi utama:
+Menangani **state kompleks** atau **banyak aksi** dalam satu tempat.
+
+```jsx
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'tambah': return { count: state.count + 1 };
+    case 'kurang': return { count: state.count - 1 };
+    default: return state;
+  }
+};
+
+const [state, dispatch] = useReducer(reducer, { count: 0 });
+```
+
+### Analogi:
+Seperti punya resepsionis (dispatch) dan SOP (reducer). Kamu kirim form, mereka tahu harus ngapain.
+
+---
+
+## 6. 🧮 useMemo – Simpan Hasil Perhitungan
+
+### Masalah:
+Kamu punya perhitungan berat (loop, filter besar) yang gak perlu dijalankan ulang.
+
+### Solusi:
+Gunakan `useMemo`.
+
+```jsx
+const hasil = useMemo(() => {
+  return data.filter(item => item.aktif);
+}, [data]);
+```
+
+### Analogi:
+Seperti kamu udah hitung PR, lalu nyimpen jawabannya di laci. Selama soal gak berubah, gak usah dihitung lagi.
+
+---
+
+## 7. 🎯 useCallback – Ingat Fungsi, Biar Tidak Bikin Anak Komponen Render Ulang
+
+### Masalah:
+Fungsi dianggap "berbeda" tiap render → komponen anak re-render terus.
+
+### Solusi:
+Gunakan `useCallback`.
+
+```jsx
+const handleClick = useCallback(() => {
+  setCount(c => c + 1);
+}, []);
+```
+
+### Analogi:
+Seperti kamu ngasih ID ke fungsi, jadi React bisa bilang:  
+“Oh ini fungsi yang sama, gak usah bikin ulang.”
+
+---
+
+## 8. ⏳ Bonus: useLayoutEffect, useId, useTransition
+
+### `useLayoutEffect`
+Sama kayak `useEffect`, tapi jalan **sebelum layar digambar**. Dipakai kalau kamu perlu atur layout secara presisi.
+
+### `useId`
+Bikin ID unik di form, misalnya untuk label dan input yang cocok.
+
+```jsx
+const id = useId();
+<label htmlFor={id}>Nama:</label>
+<input id={id} />
+```
+
+### `useTransition`, `useDeferredValue`
+Buat UI yang lebih smooth. Cocok untuk filtering atau search yang berat, biar input gak nge-lag.
+
+---
+
+## 🧪 Tabel Ringkasan
+
+| Hook           | Fungsi Utama                          | Re-render? | Cocok Untuk                        |
+|----------------|----------------------------------------|------------|------------------------------------|
+| `useState`     | Menyimpan data lokal                   | Ya         | Form, klik, toggle                 |
+| `useEffect`    | Efek samping setelah render            | Ya         | Fetch data, timer, event listener |
+| `useRef`       | Simpan nilai tanpa render ulang        | Tidak      | Timer ID, akses DOM                |
+| `useContext`   | Ambil data dari Provider               | Ya         | Tema, user login, bahasa           |
+| `useReducer`   | Manajemen state kompleks               | Ya         | Form besar, banyak aksi            |
+| `useMemo`      | Simpan hasil perhitungan               | Tidak      | Filter, sort, hitung               |
+| `useCallback`  | Simpan fungsi agar tidak berubah       | Tidak      | Props ke komponen anak             |
+| `useLayoutEffect` | Efek sebelum layar tampil          | Ya         | Ukuran layout, animasi             |
+| `useId`        | ID unik untuk komponen/form            | -          | Aksesibilitas, label-input         |
+
+---
+
+## 🧠 Kesimpulan Akhir
+
+Hooks itu bukan sekadar fitur. Mereka adalah **cara baru untuk berpikir dalam React**.  
+Dimulai dari `useState`, lalu berkembang ke `useEffect`, `useRef`, dan akhirnya kamu akan butuh `useReducer`, `useContext`, `useMemo`, `useCallback`, dan teman-temannya.
+
+Tapi jangan buru-buru. Kuasai satu per satu.  
+React bukan lomba cepat. Ini maraton. Tapi yang menang, biasanya orang yang ngerti kapan harus pakai hook... dan kapan harus ambil napas.
+
+---

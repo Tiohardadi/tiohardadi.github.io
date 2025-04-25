@@ -3,15 +3,15 @@ const { withContentlayer } = require("next-contentlayer");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  // basePath: '/tiohardadis',
-  // assetPrefix: '/tiohardadis/',
+  assetPrefix: './',
   images: {
     unoptimized: true,
   },
   transpilePackages: ['contentlayer', 'next-contentlayer'],
   reactStrictMode: true,
   swcMinify: true,
-  exportTrailingSlash: true,
+  trailingSlash: true,
+  basePath: '', 
 };
 
 module.exports = withContentlayer(nextConfig);

@@ -1,0 +1,98 @@
+---
+title: "React Native: Expo vs Bare Workflow, Mending Pilih yang Mana?"
+description: Perbandingan lengkap dan santai antara Expo dan Bare Workflow di React Native. Bantu kamu menentukan pilihan terbaik buat project-mu—dengan analogi seru, studi kasus nyata, dan tabel perbandingan yang gampang dipahami.
+date: 2025-05-23
+---
+
+**React Native: Expo vs Bare Workflow, Mending Pilih yang Mana?**
+
+Ketika kamu mulai bikin aplikasi dengan React Native, kamu mungkin langsung nanya:
+
+> “Ini workflow-nya mau yang gampang-gampang aja dulu, atau sekalian yang advanced sekalian?”
+
+Dan itu pertanyaan yang sangat masuk akal. Karena saat mulai dengan React Native, kamu bakal dihadapkan pada dua jalur utama: **Expo** dan **Bare Workflow**. Keduanya adalah cara yang sah untuk membangun aplikasi, tapi masing-masing datang dengan gaya hidupnya sendiri. Kalau Expo itu ibarat kamu pindah ke apartemen fully furnished—tinggal masuk, semua udah tersedia. Bare Workflow? Lebih kayak bangun rumah dari nol—bisa custom segalanya, tapi siap-siap ribet.
+
+---
+
+### 🔧 Expo Workflow: Cepat, Simpel, Tanpa Banyak Drama
+
+Kalau kamu suka yang simpel-simpel, Expo bisa jadi cinta pertama. Gak perlu install ini-itu, tinggal buka laptop, ngoding, scan QR, dan... voila! Aplikasi muncul di HP.
+
+> Expo itu kayak pake template Canva buat poster: langsung jadi, gak perlu mikirin layout dari nol.
+
+**Kenapa Expo itu menarik banget buat pemula (dan orang yang suka efisiensi):**
+
+* **Zero config:** Gak perlu ribet setup awal. Cukup install `expo-cli`, dan langsung jalan.
+* **Preview instan:** Bisa lihat hasil coding di HP dalam hitungan detik. Cocok buat yang suka lihat hasil secepat mungkin.
+* **Fitur bawaan lengkap:** Mau akses kamera? GPS? Push notification? Tinggal panggil API-nya, gak perlu install library tambahan.
+* **Over The Air (OTA) update:** Aplikasi bisa diperbarui tanpa harus upload ulang ke App Store atau Play Store. Efeknya: development cycle jadi super cepat.
+
+**Tapi bukan berarti tanpa kekurangan:**
+
+* **Keterbatasan library:** Expo hanya mendukung library yang kompatibel dengan managed workflow-nya. Kalau kamu butuh native module yang spesifik, bisa mentok.
+* **Ukuran aplikasi:** Karena banyak fitur dibawa semua, walau gak dipakai, ukuran build-nya bisa jadi lebih besar.
+* **Ejecting itu ribet:** Kalau akhirnya butuh fitur native yang gak didukung, kamu harus eject dari Expo ke Bare Workflow. Dan proses eject ini gak selalu mulus.
+
+**Cocok buat siapa?**
+
+* Pemula yang baru mulai belajar React Native.
+* Developer yang mau bikin prototype atau MVP dengan cepat.
+* Tim kecil yang pengen ngebut bikin produk.
+
+---
+
+### 🧳 Bare Workflow: Lebih Bebas, Tapi Perlu Tenaga Ekstra
+
+Bare Workflow itu kayak naik motor adventure. Bisa ke mana aja, bisa modifikasi sesuka hati, tapi siap-siap juga buat bongkar mesin kalau tiba-tiba mogok.
+
+> Cocok buat kamu yang suka oprek-oprek, atau emang butuh performa dan fitur yang gak bisa ditawar.
+
+**Apa yang bikin Bare Workflow powerful banget:**
+
+* **Kontrol penuh:** Kamu bisa akses semua API native yang disediakan oleh Android/iOS. Mau pakai library aneh-aneh dari vendor? Boleh banget.
+* **Integrasi lebih luas:** Bisa integrasi dengan Firebase Native SDK, Bluetooth, Background Task custom, dan lain-lain.
+* **Tuning performa:** Karena kamu bisa otak-atik level native, kamu bisa optimasi performa aplikasi lebih jauh.
+
+**Tapi ya, semua itu ada harganya:**
+
+* **Setup awal:** Harus install Xcode (untuk iOS) dan Android Studio. Dan belajar cara pakainya.
+* **Build process lebih teknis:** Harus ngerti cara compile, build, dan deploy ke simulator/device.
+* **Debugging bisa dalam:** Kalau errornya muncul di level native, debugging bisa makan waktu dan tenaga ekstra.
+
+**Cocok buat siapa?**
+
+* Developer yang butuh fitur custom dan gak mau dibatasi Expo.
+* Project skala besar dengan kebutuhan kompleks.
+* Aplikasi yang bakal dijalankan untuk jangka panjang dan butuh skalabilitas tinggi.
+
+---
+
+### Studi Kasus: Dari Expo ke Bare
+
+Bayangin kamu lagi bikin aplikasi untuk event kampus. Awalnya cuma butuh fitur-fitur standar: registrasi, peta venue, dan jadwal acara. Expo cocok banget. Cepat dan langsung jalan. Tapi kemudian panitia minta fitur NFC buat scan tiket—nah, di sinilah Expo mulai kewalahan. Harus eject ke Bare, mulai setting ulang, dan handle semua dari sisi native.
+
+Dan itu bukan hal buruk. Banyak yang memang mulai dari Expo, lalu naik level ke Bare Workflow begitu kebutuhannya tumbuh. Jadi jangan takut untuk mulai dari yang simpel, selama kamu tahu kapan harus upgrade.
+
+---
+
+### Ringkasan Perbandingan
+
+| Fitur             | Expo Workflow                   | Bare Workflow                  |
+| ----------------- | ------------------------------- | ------------------------------ |
+| Setup awal        | Sangat mudah, instant           | Perlu install dan konfigurasi  |
+| Fitur native      | Terbatas (harus sesuai Expo)    | Full akses                     |
+| Ukuran file build | Cenderung lebih besar           | Bisa lebih ramping jika diatur |
+| Kecepatan dev     | Cepat banget (hot reload + OTA) | Relatif lambat, build manual   |
+| Fleksibilitas     | Terbatas                        | Sangat fleksibel               |
+| Cocok untuk       | Pemula, prototype, MVP          | App kompleks, fitur khusus     |
+
+---
+
+### Kesimpulan Akhir: Jangan Pilih Berdasarkan Tren
+
+Workflow terbaik bukan yang paling populer, tapi yang paling pas dengan kebutuhan project kamu sekarang. Jangan maksa pake Bare cuma karena "kelihatan pro", dan jangan terlalu nyaman di Expo kalau ternyata kebutuhan aplikasi udah melewati batas kemampuannya.
+
+Mulai dari yang paling sederhana yang bisa jalan, lalu scale up seiring bertambahnya fitur. Karena, seperti layout Flexbox yang akhirnya pas di semua layar, workflow yang pas itu yang bikin kamu bisa fokus ke apa yang penting: bikin aplikasi yang berguna dan bisa dinikmati user.
+
+Selamat ngoding, dan semoga pilihannya gak bikin kamu pengen rollback ke zaman jQuery!
+---

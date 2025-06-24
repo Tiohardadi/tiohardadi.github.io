@@ -46,7 +46,7 @@ export function PostCard({ post }: PostCardProps) {
               <Link href={`/posts?tag=${encodeURIComponent(tag)}`} className="hover:underline">
                 {tag}
               </Link>
-              {index < post.tags.length - 1 && " • "}
+              {index < (post.tags?.length || 0) - 1 && " • "}
             </span>
           ))}
         </div>

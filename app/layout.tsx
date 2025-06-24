@@ -17,6 +17,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <body
         className={`antialiased min-h-screen bg-white dark:bg-[#161928] text-slate-900 dark:text-slate-50`}
+        suppressHydrationWarning
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <div className="max-w-3xl mx-auto py-10 px-4">

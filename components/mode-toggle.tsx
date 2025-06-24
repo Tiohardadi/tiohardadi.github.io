@@ -1,15 +1,30 @@
 "use client"
 
 import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 
 export function ModeToggle() {
   const { setTheme, theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return (
+      <div className="border rounded-md w-6 h-6 flex items-center justify-center">
+        <div className="w-4 h-4" />
+      </div>
+    )
+  }
+
   return (
     <button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
       className="border rounded-md w-6 h-6 flex items-center justify-center">
       <span className="sr-only">Toggle mode</span>
-      {theme == "light" ? (
+      {theme === "light" ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

@@ -1,3 +1,5 @@
+"use client"
+
 import { allPosts } from "@/.contentlayer/generated"
 import { ModeToggle } from "@/components/mode-toggle"
 import { BackButton } from "@/components/back-button"
@@ -5,18 +7,11 @@ import { PostCard } from "@/components/post-card"
 import { Search } from "@/components/search"
 import { sortPostsByDate } from "@/lib/utils"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 
-export const metadata = {
-  title: "All Posts - Tio's Blog",
-  description: "Semua artikel dan tulisan dari blog Tio Hardadi Somantri",
-}
-
-interface PageProps {
-  searchParams: { tag?: string }
-}
-
-export default function AllPostsPage({ searchParams }: PageProps) {
-  const selectedTag = searchParams.tag
+export default function AllPostsPage() {
+  const searchParams = useSearchParams()
+  const selectedTag = searchParams.get('tag')
   const filteredPosts = selectedTag 
     ? allPosts.filter(post => post.tags?.includes(selectedTag))
     : allPosts

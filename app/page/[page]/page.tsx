@@ -1,12 +1,39 @@
-import { allPosts, allProjects } from "@/.contentlayer/generated";
-import Link from "next/link";
-import { ModeToggle } from "@/components/mode-toggle";
-import { PostCard } from "@/components/post-card";
-import { Pagination } from "@/components/pagination";
-import { Search } from "@/components/search";
-import { paginatePosts } from "@/lib/utils";
+import { allPosts, allProjects } from "@/.contentlayer/generated"
+import Link from "next/link"
+import { ModeToggle } from "@/components/mode-toggle"
+import { PostCard } from "@/components/post-card"
+import { Pagination } from "@/components/pagination"
+import { paginatePosts } from "@/lib/utils"
+import { notFound } from "next/navigation"
 
-export default function Home() {
+interface PageProps {
+  params: {
+    page: string
+  }
+}
+
+export async function generateStaticParams() {
+  const totalPages = Math.ceil(allPosts.length / 5)
+  const pages = Array.from({ length: totalPages }, (_, i) => ({
+    page: (i + 1).toString()
+  }))
+  
+  return pages
+}
+
+export default function PaginatedPage({ params }: PageProps) {
+  const currentPage = parseInt(params.page)
+  
+  if (isNaN(currentPage) || currentPage < 1) {
+    notFound()
+  }
+
+  const { posts, totalPages, currentPage: page } = paginatePosts(allPosts, currentPage)
+  
+  if (currentPage > totalPages) {
+    notFound()
+  }
+
   return (
     <>
       <header>
@@ -14,6 +41,7 @@ export default function Home() {
           <ModeToggle />
         </div>
       </header>
+      
       <div className="flex flex-col sm:flex-row mb-[60px]">
         <div className="flex justify-center sm:justify-start mb-4 sm:mb-0">
           <img
@@ -32,7 +60,6 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center sm:justify-start text-sm mt-2">
             <div className="mr-4">Find me on</div>
-
             
             <a href="https://www.linkedin.com/in/tiohardadi/"
               target="_blank"
@@ -45,7 +72,6 @@ export default function Home() {
               />
             </a>
 
-            
             <a href="https://github.com/Tiohardadi"
               target="_blank"
               rel="noopener noreferrer"
@@ -65,7 +91,6 @@ export default function Home() {
               />
             </a>
 
-            
             <a href="https://www.instagram.com/tiohardadis"
               target="_blank"
               rel="noopener noreferrer"
@@ -79,34 +104,25 @@ export default function Home() {
           </div>
         </div>
       </div>
+
       <div className="mb-[80px]">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold">My Posts</h2>
           <div className="text-sm text-gray-600 dark:text-gray-400">
-            {allPosts.length} posts total
+            Halaman {currentPage} dari {totalPages}
           </div>
         </div>
 
-        <div className="mb-6">
-          <Search posts={allPosts} />
-        </div>
-
         <div className="flex flex-col gap-6">
-          {paginatePosts(allPosts, 1).posts.map((post) => (
+          {posts.map((post) => (
             <PostCard key={post._id} post={post} />
           ))}
         </div>
 
         <Pagination 
-          currentPage={1} 
-          totalPages={paginatePosts(allPosts, 1).totalPages}
+          currentPage={currentPage} 
+          totalPages={totalPages}
         />
-        
-        <div className="text-center mt-6">
-          <Link href="/posts" className="text-sm hover:underline">
-            Lihat semua posts →
-          </Link>
-        </div>
       </div>
 
       <div className="mb-[80px]">
@@ -131,5 +147,5 @@ export default function Home() {
         ))}
       </div>
     </>
-  );
+  )
 }
